@@ -884,3 +884,80 @@ section { padding: 6rem 0; position: relative; }
     opacity: 0;
   }
 }
+
+/* Screen Reader Only Class for Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible Styles for Keyboard Navigation */
+*:focus-visible {
+  outline: 2px solid var(--neon-blue);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible,
+.social-link:focus-visible {
+  outline: 3px solid var(--neon-blue);
+  outline-offset: 4px;
+  box-shadow: var(--shadow-glow);
+}
+
+/* Skip to Main Content Link */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--neon-blue);
+  color: var(--bg-darker);
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 10000;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* Improve Text Contrast for Better Readability */
+.hero-description,
+.about-text p,
+.project-content p {
+  color: #cbd5e1;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-secondary: #e2e8f0;
+    --text-muted: #cbd5e1;
+  }
+  
+  .btn-outline,
+  .btn-secondary {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

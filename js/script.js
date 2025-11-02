@@ -92,12 +92,17 @@ let isMenuOpen = false;
 hamburger.addEventListener('click', () => {
     isMenuOpen = !isMenuOpen;
     
+    // Update ARIA attributes
+    hamburger.setAttribute('aria-expanded', isMenuOpen);
+    
     if (isMenuOpen) {
         mobileMenu.style.display = 'block';
-        hamburger.innerHTML = '<i class="fa-solid fa-times"></i>';
+        hamburger.innerHTML = '<i class="fa-solid fa-times" aria-hidden="true"></i>';
+        hamburger.setAttribute('aria-label', 'Close mobile menu');
     } else {
         mobileMenu.style.display = 'none';
-        hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        hamburger.innerHTML = '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+        hamburger.setAttribute('aria-label', 'Toggle mobile menu');
     }
 });
 
