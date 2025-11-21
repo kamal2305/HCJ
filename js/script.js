@@ -8,7 +8,7 @@ function createParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
     
-    const particleCount = 50;
+    const particleCount = 20;
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
@@ -44,8 +44,8 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             loadingScreen.style.display = 'none';
             mainContent.style.display = 'block';
-        }, 500);
-    }, 1500);
+        }, 150);
+    }, 600);
 });
 
 // Typing Animation for Hero Section (only on home page)
