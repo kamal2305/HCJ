@@ -1,29 +1,27 @@
-# Portfolio Website - Vanilla HTML, CSS, and JavaScript
+# Portfolio Website - Multi-Page HTML, CSS, and JavaScript
 
-This is a complete recreation of the React portfolio website using only **HTML**, **CSS**, and **JavaScript**. It includes all the same features, animations, and functionality as the original React version.
+This is a complete multi-page portfolio website using **HTML**, **CSS**, and **JavaScript**. It features a modern design with smooth animations and full responsiveness.
 
 ## 🌟 Features
+
+### Site Structure
+- 🏠 **Home Page** (index.html) - Hero section with animated introduction
+- 👤 **About Page** (about.html) - Personal information and statistics
+- 💻 **Skills Page** (skills.html) - Technical skills with progress bars
+- 📁 **Projects Page** (projects.html) - Featured projects showcase
+- 📧 **Contact Page** (contact.html) - Contact form with EmailJS integration
 
 ### Animations & Effects
 - ✨ **Loading Screen** - Animated loading screen with gradient background
 - ⌨️ **Typing Animation** - Typewriter effect in hero section
-- 🎨 **Smooth Scroll** - Smooth scrolling between sections
+- 🎨 **Smooth Navigation** - Seamless transitions between pages
 - 📊 **Skill Bars** - Animated progress bars with shimmer effect
 - 🎭 **Fade-in Animations** - Elements fade in as you scroll
 - 🔄 **Hover Effects** - Interactive hover animations on cards and buttons
 - 📱 **Responsive Design** - Fully responsive on all devices
 - 🚀 **Scroll to Top** - Animated button to scroll back to top
-- 🎯 **Active Navigation** - Navigation links highlight based on scroll position
 - 💫 **Floating Cards** - Subtle floating animation on profile cards
 - ⚡ **Parallax Effect** - Parallax scrolling in hero section
-
-### Sections
-1. **Hero Section** - Eye-catching introduction with gradient background
-2. **About Section** - Personal information with stats
-3. **Skills Section** - Technical skills with animated progress bars
-4. **Projects Section** - Featured projects showcase
-5. **Contact Section** - Contact form with EmailJS integration
-6. **Footer** - Simple footer with copyright
 
 ### Interactive Elements
 - 📱 **Mobile Menu** - Hamburger menu for mobile devices
@@ -31,10 +29,11 @@ This is a complete recreation of the React portfolio website using only **HTML**
 - 🔗 **Social Links** - Links to social media profiles
 - 🎨 **Dynamic Navbar** - Navbar changes style on scroll
 - 👆 **Smooth Interactions** - All buttons and links have smooth transitions
+- 🎯 **Active Navigation** - Current page highlighted in navigation
 
 ## 🛠️ Technologies Used
 
-- **HTML5** - Semantic markup
+- **HTML5** - Semantic markup with multi-page structure
 - **CSS3** - Modern styling with:
   - Flexbox & Grid layouts
   - CSS animations and transitions
@@ -46,7 +45,7 @@ This is a complete recreation of the React portfolio website using only **HTML**
   - Intersection Observer API for scroll animations
   - Event listeners
   - EmailJS integration
-  - Smooth scrolling
+  - Multi-page navigation handling
   - Dynamic content loading
 
 ## 📦 External Dependencies

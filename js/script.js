@@ -1,5 +1,7 @@
-// Initialize EmailJS
-emailjs.init('42f2whhFbMsvCPjxl');
+// Initialize EmailJS (only on contact page)
+if (document.getElementById('contact-form')) {
+    emailjs.init('42f2whhFbMsvCPjxl');
+}
 
 // Create Particles Animation
 function createParticles() {
@@ -28,8 +30,11 @@ function createParticles() {
 
 // Loading Screen
 window.addEventListener('load', () => {
-    // Initialize particles
-    createParticles();
+    // Initialize particles only on home page
+    const particlesContainer = document.getElementById('particles');
+    if (particlesContainer) {
+        createParticles();
+    }
     
     setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
@@ -40,32 +45,35 @@ window.addEventListener('load', () => {
             loadingScreen.style.display = 'none';
             mainContent.style.display = 'block';
         }, 500);
-    }, 2000);
+    }, 1500);
 });
 
-// Typing Animation for Hero Section
+// Typing Animation for Hero Section (only on home page)
 document.addEventListener('DOMContentLoaded', () => {
     const typingText = document.getElementById('typing-text');
     const cursor = document.getElementById('cursor');
-    const fullText = "Hi, I'm Kamalesh Thandi Thirumal";
-    let index = 0;
-    const typingSpeed = 80;
+    
+    if (typingText && cursor) {
+        const fullText = "Hi, I'm Kamalesh Thandi Thirumal";
+        let index = 0;
+        const typingSpeed = 80;
 
-    function typeText() {
-        if (index <= fullText.length) {
-            typingText.textContent = fullText.slice(0, index);
-            index++;
-            setTimeout(typeText, typingSpeed);
-        } else {
-            // Hide cursor after typing is complete
-            setTimeout(() => {
-                cursor.style.display = 'none';
-            }, 500);
+        function typeText() {
+            if (index <= fullText.length) {
+                typingText.textContent = fullText.slice(0, index);
+                index++;
+                setTimeout(typeText, typingSpeed);
+            } else {
+                // Hide cursor after typing is complete
+                setTimeout(() => {
+                    cursor.style.display = 'none';
+                }, 500);
+            }
         }
-    }
 
-    // Start typing after a short delay
-    setTimeout(typeText, 1000);
+        // Start typing after a short delay
+        setTimeout(typeText, 1000);
+    }
 });
 
 // Navbar Scroll Effect
@@ -89,75 +97,84 @@ const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 let isMenuOpen = false;
 
-hamburger.addEventListener('click', () => {
-    isMenuOpen = !isMenuOpen;
-    
-    // Update ARIA attributes
-    hamburger.setAttribute('aria-expanded', isMenuOpen);
-    
-    if (isMenuOpen) {
-        mobileMenu.style.display = 'block';
-        hamburger.innerHTML = '<i class="fa-solid fa-times" aria-hidden="true"></i>';
-        hamburger.setAttribute('aria-label', 'Close mobile menu');
-    } else {
-        mobileMenu.style.display = 'none';
-        hamburger.innerHTML = '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
-        hamburger.setAttribute('aria-label', 'Toggle mobile menu');
-    }
-});
-
-// Active Navigation Link on Scroll
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-function updateActiveLink() {
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
         
-        if (pageYOffset >= sectionTop - 100) {
-            current = section.getAttribute('id');
+        // Update ARIA attributes
+        hamburger.setAttribute('aria-expanded', isMenuOpen);
+        
+        if (isMenuOpen) {
+            mobileMenu.style.display = 'block';
+            hamburger.innerHTML = '<i class="fa-solid fa-times" aria-hidden="true"></i>';
+            hamburger.setAttribute('aria-label', 'Close mobile menu');
+        } else {
+            mobileMenu.style.display = 'none';
+            hamburger.innerHTML = '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+            hamburger.setAttribute('aria-label', 'Toggle mobile menu');
         }
     });
     
+    // Close mobile menu when clicking on any link
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (isMenuOpen) {
+                mobileMenu.style.display = 'none';
+                hamburger.innerHTML = '<i class="fa-solid fa-bars" aria-hidden="true"></i>';
+                hamburger.setAttribute('aria-label', 'Toggle mobile menu');
+                isMenuOpen = false;
+            }
+        });
+    });
+}
+
+// Set active navigation link based on current page
+function setActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPage || 
+            (currentPage === '' && linkHref === 'index.html') ||
+            (currentPage === '/' && linkHref === 'index.html')) {
             link.classList.add('active');
         }
     });
     
     mobileNavLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
+        const linkHref = link.getAttribute('href');
+        if (linkHref === currentPage || 
+            (currentPage === '' && linkHref === 'index.html') ||
+            (currentPage === '/' && linkHref === 'index.html')) {
             link.classList.add('active');
         }
     });
 }
 
-window.addEventListener('scroll', updateActiveLink);
+// Call on page load
+setActiveNavLink();
 
-// Smooth Scroll for Navigation Links
+// Smooth Scroll for hash links only (for scroll indicator on home page)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+        // Don't prevent default for regular page links
+        if (this.getAttribute('href') === '#') {
+            e.preventDefault();
+            return;
+        }
         
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
+            e.preventDefault();
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-            
-            // Close mobile menu if open
-            if (isMenuOpen) {
-                mobileMenu.style.display = 'none';
-                hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                isMenuOpen = false;
-            }
         }
     });
 });
@@ -223,57 +240,60 @@ const animatedElements = document.querySelectorAll(`
 
 animatedElements.forEach(el => observer.observe(el));
 
-// Contact Form Submission with EmailJS
+// Contact Form Submission with EmailJS (only on contact page)
 const contactForm = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
-const buttonText = document.getElementById('button-text');
-const formStatus = document.getElementById('form-status');
 
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Disable submit button
-    submitBtn.disabled = true;
-    buttonText.textContent = 'Sending...';
-    formStatus.innerHTML = '';
-    
-    // Get form data
-    const formData = new FormData(contactForm);
-    const templateParams = {
-        from_name: formData.get('from_name'),
-        from_email: formData.get('from_email'),
-        to_name: 'Kamalesh',
-        subject: formData.get('subject'),
-        message: formData.get('message'),
-        reply_to: formData.get('from_email')
-    };
-    
-    try {
-        const result = await emailjs.send(
-            'service_r37vfqa',
-            'template_80vp888',
-            templateParams
-        );
+if (contactForm) {
+    const submitBtn = document.getElementById('submit-btn');
+    const buttonText = document.getElementById('button-text');
+    const formStatus = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        if (result.text === 'OK') {
-            formStatus.innerHTML = '<div class="success-message">Message sent successfully! I\'ll get back to you soon.</div>';
-            contactForm.reset();
-        } else {
+        // Disable submit button
+        submitBtn.disabled = true;
+        buttonText.textContent = 'Sending...';
+        formStatus.innerHTML = '';
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const templateParams = {
+            from_name: formData.get('from_name'),
+            from_email: formData.get('from_email'),
+            to_name: 'Kamalesh',
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+            reply_to: formData.get('from_email')
+        };
+        
+        try {
+            const result = await emailjs.send(
+                'service_r37vfqa',
+                'template_80vp888',
+                templateParams
+            );
+            
+            if (result.text === 'OK') {
+                formStatus.innerHTML = '<div class="success-message">Message sent successfully! I\'ll get back to you soon.</div>';
+                contactForm.reset();
+            } else {
+                formStatus.innerHTML = '<div class="error-message">Failed to send message. Please try again.</div>';
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
             formStatus.innerHTML = '<div class="error-message">Failed to send message. Please try again.</div>';
+        } finally {
+            submitBtn.disabled = false;
+            buttonText.textContent = 'Send Message';
+            
+            // Clear status message after 3 seconds
+            setTimeout(() => {
+                formStatus.innerHTML = '';
+            }, 3000);
         }
-    } catch (error) {
-        console.error('Error sending email:', error);
-        formStatus.innerHTML = '<div class="error-message">Failed to send message. Please try again.</div>';
-    } finally {
-        submitBtn.disabled = false;
-        buttonText.textContent = 'Send Message';
-        
-        // Clear status message after 3 seconds
-        setTimeout(() => {
-            formStatus.innerHTML = '';
-        }, 3000);
-    }
-});
+    });
+}
 
 // Scroll to Top Button
 const scrollToTopBtn = document.getElementById('scroll-to-top');
@@ -322,17 +342,20 @@ document.querySelectorAll('.btn').forEach(btn => {
     });
 });
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroContent = document.querySelector('.hero-content');
-    const heroImage = document.querySelector('.hero-image');
-    
-    if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
-        heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
-});
+// Parallax effect for hero section (only on home page)
+const heroContent = document.querySelector('.hero-content');
+const heroImage = document.querySelector('.hero-image');
+
+if (heroContent && heroImage) {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        if (scrolled < window.innerHeight) {
+            heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+            heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
+        }
+    });
+}
 
 // Add animation delay to skill items
 document.querySelectorAll('.skill-category').forEach((category, categoryIndex) => {
